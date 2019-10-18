@@ -1,6 +1,6 @@
 using System;
 
-namespace SkillzMatrix.Data
+namespace SkillzMatrix.Shared
 {
     public class WeatherForecast
     {

@@ -10,7 +10,7 @@ namespace SkillzMatrixAPI.Data
     public class SkillzMatrixDbContext : DbContext
     {
         public DbSet<Skillz> Skillz {get;set;}
-
+        public DbSet<Teams> Teams { get; set; }
 
         public SkillzMatrixDbContext(DbContextOptions<SkillzMatrixDbContext> options) :base(options)
         {

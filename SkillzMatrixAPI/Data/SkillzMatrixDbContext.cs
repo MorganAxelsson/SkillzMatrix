@@ -11,6 +11,7 @@ namespace SkillzMatrixAPI.Data
     {
         public DbSet<Skillz> Skillz {get;set;}
         public DbSet<Teams> Teams { get; set; }
+        public DbSet<Users> Users { get; set; }
 
         public SkillzMatrixDbContext(DbContextOptions<SkillzMatrixDbContext> options) :base(options)
         {

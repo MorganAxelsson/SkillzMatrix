@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SkillzMatrix.Shared;
+using SkillzMatrixAPI.Data;
 
 namespace SkillzMatrixAPI.Controllers
 {
@@ -18,10 +19,13 @@ namespace SkillzMatrixAPI.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private SkillzMatrixDbContext _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, SkillzMatrixDbContext context)
         {
             _logger = logger;
+            _context = context;
+            _context.Database.EnsureCreated();
         }
 
         [HttpGet]

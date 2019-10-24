@@ -12,6 +12,8 @@ namespace SkillzMatrixAPI.Data
         public DbSet<Skillz> Skillz {get;set;}
         public DbSet<Teams> Teams { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<Levels> Levels { get; set; }
+        public DbSet<UserInTeams> UserInTeams { get; set; }
 
         public SkillzMatrixDbContext(DbContextOptions<SkillzMatrixDbContext> options) :base(options)
         {
@@ -26,6 +28,7 @@ namespace SkillzMatrixAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UserInTeams>().HasKey(sc => new { sc.UserId, sc.TeamId });
         }
     }
 }

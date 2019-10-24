@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Repositorys\" />
+    <Folder Include="Data\Repositorys\Interfaces\" />
   </ItemGroup>
 
 </Project>

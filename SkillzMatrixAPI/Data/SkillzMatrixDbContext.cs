@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SkillzMatrixAPI.Data.Models;
+using SkillzMatrixAPI.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +15,12 @@ namespace SkillzMatrixAPI.Data
 
         public SkillzMatrixDbContext(DbContextOptions<SkillzMatrixDbContext> options) :base(options)
         {
-
+            Database.Migrate();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.UseSqlServer("Server=.;Database=entityframework;Trusted_Connection=true;MultipleActiveResultSets=true;");            
+            base.OnConfiguring(optionsBuilder);                   
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

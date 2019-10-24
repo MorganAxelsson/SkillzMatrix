@@ -13,6 +13,7 @@ namespace SkillzMatrixAPI.Data
         public DbSet<Teams> Teams { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Levels> Levels { get; set; }
+        public DbSet<UserSkillz> UserSkillz { get; set; }
         public DbSet<UserInTeams> UserInTeams { get; set; }
 
         public SkillzMatrixDbContext(DbContextOptions<SkillzMatrixDbContext> options) :base(options)

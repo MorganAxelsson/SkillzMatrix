@@ -27,7 +27,13 @@ namespace SkillzMatrixAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SkillzMatrixDbContext>(options => options.UseSqlServer("server=MORGAN\\SQLEXPRESS;Database = SkillzMatrixDb; Trusted_Connection = true; MultipleActiveResultSets = true;"));            
+            //DbContext
+            string conn = Configuration["ConnectionStrings:SkillzMatrixAPIConnectionString"];
+            services.AddDbContext<SkillzMatrixDbContext>(options => options.UseSqlServer(conn));            
+
+            //Repositories
+            //TODO:
+
             services.AddControllers();
         }
 
@@ -37,6 +43,9 @@ namespace SkillzMatrixAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                //Seed data
+                //TODO:seed data
             }
 
             app.UseHttpsRedirection();

@@ -38,14 +38,14 @@ namespace SkillzMatrixAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SkillzMatrixDbContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
 
                 //Seed data
-                //TODO:seed data
+                context.SeedData();
             }
 
             app.UseHttpsRedirection();

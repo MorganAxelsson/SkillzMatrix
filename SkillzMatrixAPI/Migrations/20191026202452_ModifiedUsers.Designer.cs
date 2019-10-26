@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillzMatrixAPI.Data;
 
 namespace SkillzMatrixAPI.Migrations
 {
     [DbContext(typeof(SkillzMatrixDbContext))]
-    partial class SkillzMatrixDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191026202452_ModifiedUsers")]
+    partial class ModifiedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

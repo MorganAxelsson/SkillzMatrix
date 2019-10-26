@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SkillzMatrixAPI.Data;
+using SkillzMatrixAPI.Data.Repositorys;
+using SkillzMatrixAPI.Data.Repositorys.Interfaces;
 
 namespace SkillzMatrixAPI
 {
@@ -29,10 +31,10 @@ namespace SkillzMatrixAPI
         {
             //DbContext
             string conn = Configuration["ConnectionStrings:SkillzMatrixAPIConnectionString"];
-            services.AddDbContext<SkillzMatrixDbContext>(options => options.UseSqlServer(conn));            
+            services.AddDbContext<SkillzMatrixDbContext>(options => options.UseSqlServer(conn));
 
             //Repositories
-            //TODO:
+            services.AddScoped<ITeamsRepository, TeamsRepository>();
 
             services.AddControllers();
         }

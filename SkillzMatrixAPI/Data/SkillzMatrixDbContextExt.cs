@@ -89,14 +89,136 @@ namespace SkillzMatrixAPI.Data
             }
 
             #endregion
-            #region Teams
-            context.Teams.Add(new Entities.Teams {
-                Description="",
-                TeamName="TestTeam"                
-            });
+            #region teams
+            if (!context.Teams.Any())
+            {
+                var teams = new List<Teams>()
+                {
+                    new Teams
+                    {
+                        TeamName = "A-Team"
+                    },
+                    new Teams
+                    {
+                        TeamName = "B-Team"
+                    },
+                    new Teams
+                    {
+                        TeamName = "Team Mint"
+                    }
+
+                };
+                context.Teams.AddRange(teams);
+            }
 
             #endregion
 
+            #region Skillz
+            if (!context.Skillz.Any())
+            {
+                var competence = new List<Skillz>()
+                {
+                    new Skillz
+                    {
+                        Name = "c#",
+                        Description = "programmeringsspråk"
+                    },
+                    new Skillz
+                    {
+                        Name = "Visual studio",
+                        Description = "Verktyg"
+                    },
+                    new Skillz
+                    {
+                        Name = "Java",
+                        Description = "programmeringsspråk"
+                    },
+                    new Skillz
+                    {
+                        Name = "F#",
+                        Description = "programmeringsspråk"
+                    },
+                };
+                context.Skillz.AddRange(competence);
+            }
+            #endregion
+            context.SaveChanges();
+            #region userInTeams
+            if (!context.UserInTeams.Any())
+            {
+                var userInTeams = new List<UserInTeams>()
+                {
+                    new UserInTeams
+                    {
+                        TeamId = 1,
+                        UserId = 1
+                    },
+                    new UserInTeams
+                    {
+                        TeamId = 1,
+                        UserId = 2
+                    },
+                    new UserInTeams
+                    {
+                        TeamId = 2,
+                        UserId = 3
+                    },
+                    new UserInTeams
+                    {
+                        TeamId = 3,
+                        UserId = 4
+                    },
+                    new UserInTeams
+                    {
+                        TeamId = 3,
+                        UserId = 1
+                    }
+
+                };
+                context.UserInTeams.AddRange(userInTeams);
+            }
+            #endregion
+            #region UserSkillz
+
+            if (!context.UserSkillz.Any())
+            {
+                var userComp = new List<UserSkillz>()
+                {
+                    new UserSkillz
+                    {
+                        SkillzId = 1,
+                        LevelsId = 2,
+                        UserId = 1
+                    },
+                    new UserSkillz
+                    {
+                        SkillzId = 2,
+                        LevelsId = 4,
+                        UserId = 1
+                    },
+                    new UserSkillz
+                    {
+                        SkillzId = 3,
+                        LevelsId = 1,
+                        UserId = 2
+                    },
+                    new UserSkillz
+                    {
+                        SkillzId = 3,
+                        LevelsId = 1,
+                        UserId = 3
+                    },
+                    new UserSkillz
+                    {
+                        SkillzId = 4,
+                        LevelsId = 3,
+                        UserId = 4
+                    }
+                };
+                context.UserSkillz.AddRange(userComp);
+
+            }
+            #endregion
             context.SaveChanges();
         }
     }

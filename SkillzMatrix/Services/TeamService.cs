@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Shared.Models;
-using SkillzMatrix.Shared;
+using SkillzMatrix.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace SkillzMatrix.Services
         public async Task<TeamModel[]> GetAllTeamsAsync()
         {                    
             HttpClient client = new HttpClient();
-            var result = await client.GetStringAsync("https://localhost:44344/teams/getall");
+            var result = await client.GetStringAsync("https://localhost:44344/api/teams/getall");
             return JsonConvert.DeserializeObject<TeamModel[]>(result);
         }
     }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shared.Models
+namespace SkillzMatrix.Shared.Models
 {
-    class UserModel
+   public class UserModel
     {
         public int ID { get; set; }
         public string Name { get; set; }

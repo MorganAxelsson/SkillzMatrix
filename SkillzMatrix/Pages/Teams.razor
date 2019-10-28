@@ -1,0 +1,45 @@
+﻿@page "/teams"
+@using SkillzMatrix.Shared
+@using SkillzMatrix.Services
+@inject TeamService teamService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (teams == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var team in teams)
+            {
+            <tr>
+                <td>@team.Id</td>
+                <td>@team.TeamName</td>
+                <td>@team.Description</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    TeamModel[] teams;
+
+    protected override async Task OnInitializedAsync()
+    {
+        teams = await teamService.GetAllTeamsAsync();
+    }
+}

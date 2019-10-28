@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shared.Models
+namespace SkillzMatrix.Shared.Models
 {
     public class TeamModel
     {

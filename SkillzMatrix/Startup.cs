@@ -28,8 +28,7 @@ namespace SkillzMatrix
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddServerSideBlazor();            
             services.AddScoped<TeamService>();
             services.AddScoped<SkillzService>();
         }

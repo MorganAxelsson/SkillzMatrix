@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SkillzMatrixAPI.Data.Repositorys.Interfaces;
 
 namespace SkillzMatrixAPI.Controllers
@@ -12,9 +13,11 @@ namespace SkillzMatrixAPI.Controllers
     [ApiController]
     public class SkillzController : ControllerBase
     {
+        private readonly ILogger<SkillzController> _logger;
         private ISkillzRepository _ISkillzRepository;
-        public SkillzController(ISkillzRepository skillzRepository)
+        public SkillzController(ILogger<SkillzController> logger, ISkillzRepository skillzRepository)
         {
+            _logger = logger;
             _ISkillzRepository = skillzRepository;
         }
         [HttpGet("GetAll")]

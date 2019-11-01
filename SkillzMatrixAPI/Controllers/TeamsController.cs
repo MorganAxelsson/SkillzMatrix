@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SkillzMatrixAPI.Data.Entities;
 using SkillzMatrixAPI.Data.Repositorys.Interfaces;
 
@@ -13,9 +14,11 @@ namespace SkillzMatrixAPI.Controllers
     [ApiController]
     public class TeamsController : ControllerBase
     {
+        private readonly ILogger<TeamsController> _logger;
         private ITeamsRepository _TeamsRepository;
-        public TeamsController(ITeamsRepository teamsRepository)
+        public TeamsController(ILogger<TeamsController> logger, ITeamsRepository teamsRepository)
         {
+            _logger = logger;
             _TeamsRepository = teamsRepository;
         }
         [HttpGet("GetAll")]

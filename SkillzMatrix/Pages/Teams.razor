@@ -3,9 +3,7 @@
 @using SkillzMatrix.Services
 @inject TeamService teamService
 
-<h1>Weather forecast</h1>
-
-<p>This component demonstrates fetching data from a service.</p>
+<h1>Teams</h1>
 
 @if (teams == null)
 {
@@ -13,30 +11,44 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var team in teams)
-            {
-            <tr>
-                <td>@team.Id</td>
-                <td>@team.TeamName</td>
-                <td>@team.Description</td>
-            </tr>
-            }
-        </tbody>
-    </table>
+<div class="row">
+    <div class="col-md-12">
+        Filter by name:
+    </div>
+    <div class="col-md-12 mb-3">        
+        <input type="text" @bind-value="@Name" @bind-value:event="oninput" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var team in teams.Where(x => x.TeamName.ToLower().Contains(Name.ToLower())))
+                {
+                    <tr>
+                        <td>@team.Id</td>
+                        <td>@team.TeamName</td>
+                        <td>@team.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 }
 
 @code {
-    TeamModel[] teams;
+        TeamModel[] teams;
+
+        string Name {get;set; } = "team";
 
     protected override async Task OnInitializedAsync()
     {

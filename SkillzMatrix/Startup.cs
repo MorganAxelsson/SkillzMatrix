@@ -31,6 +31,7 @@ namespace SkillzMatrix
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<TeamService>();
+            services.AddScoped<SkillzService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

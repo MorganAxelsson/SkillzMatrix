@@ -1,0 +1,56 @@
+﻿@page "/skillz"
+@using SkillzMatrix.Shared.Models
+@using SkillzMatrix.Services
+@inject SkillzService skillzService
+
+<h1>Skillz</h1>
+
+@if (skillz == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            Filter by name:
+        </div>
+        <div class="col-md-12 mb-3">
+            <input type="text" @bind-value="@skillzName" @bind-value:event="oninput" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <table class="table table-hover table-striped fixed-table-body">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var skill in skillz.Where(x => x.Name.ToLower().Contains(skillzName.ToLower())))
+                    {
+                    <tr>
+                        <td>@skill.ID</td>
+                        <td>@skill.Name</td>
+                        <td>@skill.Description</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@code {
+    SkillzModel[] skillz;
+
+    string skillzName { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        skillz = await skillzService.GetAllTeamsAsync();
+    }
+}

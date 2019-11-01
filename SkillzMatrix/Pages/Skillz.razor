@@ -8,6 +8,15 @@
 @if (skillz == null)
 {
     <p><em>Loading...</em></p>
+    <div class="spinner-grow text-muted"></div>
+    <div class="spinner-grow text-primary"></div>
+    <div class="spinner-grow text-success"></div>
+    <div class="spinner-grow text-info"></div>
+    <div class="spinner-grow text-warning"></div>
+    <div class="spinner-grow text-danger"></div>
+    <div class="spinner-grow text-secondary"></div>
+    <div class="spinner-grow text-dark"></div>
+    <div class="spinner-grow text-light"></div>
 }
 else
 {
@@ -32,25 +41,45 @@ else
                 <tbody>
                     @foreach (var skill in skillz.Where(x => x.Name.ToLower().Contains(skillzName.ToLower())))
                     {
-                    <tr>
-                        <td>@skill.ID</td>
-                        <td>@skill.Name</td>
-                        <td>@skill.Description</td>
-                    </tr>
+                        <tr>
+                            <td>@skill.ID</td>
+                            <td>@skill.Name</td>
+                            <td>@skill.Description</td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
+    <button id="popupButton" type="button" @onclick="ShowPopup" class="btn btn-outline-dark">Add skill</button>
+    @if (showPopup)
+    {
+        <div>
+            hej hej
+        </div>
+    }
 }
 
 @code {
     SkillzModel[] skillz;
 
+    bool showPopup = false;
     string skillzName { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
         skillz = await skillzService.GetAllTeamsAsync();
+    }
+    void ShowPopup()
+    {
+        if (!showPopup)
+        {
+            showPopup = true;
+        }
+        else
+        {
+            showPopup = false;
+
+        }
     }
 }

@@ -3,11 +3,20 @@
 @using SkillzMatrix.Services
 @inject UserService UserService
 
-    <h1>Users</h1>
+<h1>Users</h1>
 
 @if (users == null)
 {
     <p><em>Loading...</em></p>
+    <div class="spinner-grow text-muted"></div>
+    <div class="spinner-grow text-primary"></div> 
+    <div class="spinner-grow text-success"></div>
+    <div class="spinner-grow text-info"></div>
+    <div class="spinner-grow text-warning"></div>
+    <div class="spinner-grow text-danger"></div>
+    <div class="spinner-grow text-secondary"></div>
+    <div class="spinner-grow text-dark"></div>
+    <div class="spinner-grow text-light"></div>
 }
 else
 {
@@ -33,12 +42,12 @@ else
                 <tbody>
                     @foreach (var user in users.Where(x => x.Name.ToLower().Contains(usersName.ToLower())))
                     {
-                    <tr>
-                        <td>@user.ID</td>
-                        <td>@user.Name</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                    </tr>
+                        <tr>
+                            <td>@user.ID</td>
+                            <td>@user.Name</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                        </tr>
                     }
                 </tbody>
             </table>

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SkillzMatrix.Shared.Models;
+using SkillzMatrixAPI.Data.Entities;
 using SkillzMatrixAPI.Data.Repositorys.Interfaces;
 
 namespace SkillzMatrixAPI.Controllers
@@ -29,6 +31,21 @@ namespace SkillzMatrixAPI.Controllers
                 return Ok(skillz);
 
             return NotFound();
+        }
+        [HttpPost("Add")]
+        public async void Post([FromBody] SkillzModel value)
+        {
+            if(value != null)
+            {
+                var skillzEntity = new Skillz();
+                skillzEntity.Description = value.Description;
+                skillzEntity.Name = value.Name;
+
+                 _ISkillzRepository.Add(skillzEntity);
+                
+            }
+           
+
         }
     }
 }

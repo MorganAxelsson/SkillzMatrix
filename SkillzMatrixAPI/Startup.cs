@@ -33,12 +33,16 @@ namespace SkillzMatrixAPI
             string conn = Configuration["ConnectionStrings:SkillzMatrixAPIConnectionString"];
             services.AddDbContext<SkillzMatrixDbContext>(options => options.UseSqlServer(conn));
 
+           
+            services.AddControllers();
+
             //Repositories
+           
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITeamsRepository, TeamsRepository>();
             services.AddScoped<ISkillzRepository, SkillzRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

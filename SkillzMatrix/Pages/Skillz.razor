@@ -54,15 +54,29 @@ else
     <button id="popupButton" type="button" @onclick="ShowPopup" class="btn btn-outline-dark">Add skill</button>
     @if (showPopup)
     {
-        <div>
-            hej hej
-        </div>
+        <EditForm Model="@AddSkillModel" OnValidSubmit="@AddSkill">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="row">
+                <div class="col-md-12 mt-2">Name:</div>
+                <div class="col-md-12">
+                    <InputText id="name" @bind-Value="@AddSkillModel.Name" />
+                </div>
+                <div class="col-md-12">Description:</div>
+                <div class="col-md-12 mb-2">
+                    <InputText id="description" @bind-Value="@AddSkillModel.Description" />
+                </div>
+                <div class="col-md-12 mb-2">
+                    <button id="AddSkill" type="submit" class="btn btn-outline-dark">Add</button>
+                </div>
+            </div>
+        </EditForm>
     }
 }
 
 @code {
     SkillzModel[] skillz;
-
+    private SkillzModel AddSkillModel = new SkillzModel();
     bool showPopup = false;
     string skillzName { get; set; } = "";
 
@@ -70,6 +84,7 @@ else
     {
         skillz = await skillzService.GetAllTeamsAsync();
     }
+
     void ShowPopup()
     {
         if (!showPopup)
@@ -81,5 +96,12 @@ else
             showPopup = false;
 
         }
+    }
+    void AddSkill()
+    {
+        var skillToAdd = AddSkillModel;
+        skillzService.AddSkillAsync(AddSkillModel);
+        //TODO: add to list
+        showPopup = false;
     }
 }

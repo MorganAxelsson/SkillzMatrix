@@ -11,5 +11,6 @@ namespace SkillzMatrixAPI.Data.Repositorys.Interfaces
         Task<TEntity> Get(int id);
         Task<IEnumerable<TEntity>> GetAll();
         void Add(TEntity entity);
+        
     }
 }

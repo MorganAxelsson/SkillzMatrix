@@ -9,10 +9,11 @@ namespace SkillzMatrixAPI.Data.Repositorys
 {
     public class SkillzRepository : Repository<Skillz>, ISkillzRepository
     {
-        private SkillzMatrixDbContext _context;
+        private readonly SkillzMatrixDbContext _context;
         public SkillzRepository(SkillzMatrixDbContext context) : base(context)
         {
             _context = context;
         }
+      
     }
 }

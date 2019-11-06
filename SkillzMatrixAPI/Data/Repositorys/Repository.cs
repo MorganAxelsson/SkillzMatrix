@@ -9,10 +9,10 @@ namespace SkillzMatrixAPI.Data.Repositorys
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private SkillzMatrixDbContext _context;
-        public Repository(SkillzMatrixDbContext context)
+        private readonly SkillzMatrixDbContext _context;
+        public Repository(SkillzMatrixDbContext context) 
         {
-            _context = context;
+           _context = context;
         }
         public async Task<TEntity> Get(Guid id)
         {
@@ -29,10 +29,10 @@ namespace SkillzMatrixAPI.Data.Repositorys
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async void Add(TEntity entity)
+        public void Add(TEntity entity)
         {
-            await _context.Set<TEntity>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+              _context.Set<TEntity>().Add(entity);
+              _context.SaveChanges();
         }
     }
 }

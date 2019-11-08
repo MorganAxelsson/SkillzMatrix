@@ -21,7 +21,7 @@ namespace SkillzMatrix.Services
             _config = config;
             baseApiUrl = _config["BaseApiUrl"];
         }
-        public async Task<List<SkillzModel>> GetAllTeamsAsync()
+        public async Task<List<SkillzModel>> GetAllSkillzAsync()
         {            
             var result = await _client.GetStringAsync(baseApiUrl + "api/skillz/getall");
             return JsonConvert.DeserializeObject<List<SkillzModel>>(result);

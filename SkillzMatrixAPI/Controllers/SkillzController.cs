@@ -33,7 +33,7 @@ namespace SkillzMatrixAPI.Controllers
             return NotFound();
         }
         [HttpPost("Add")]
-        public async void Post([FromBody] SkillzModel value)
+        public void Post([FromBody] SkillzModel value)
         {
             if(value != null)
             {
@@ -41,11 +41,8 @@ namespace SkillzMatrixAPI.Controllers
                 skillzEntity.Description = value.Description;
                 skillzEntity.Name = value.Name;
 
-                 _ISkillzRepository.Add(skillzEntity);
-                
-            }
-           
-
+                 _ISkillzRepository.Add(skillzEntity);                
+            }          
         }
     }
 }

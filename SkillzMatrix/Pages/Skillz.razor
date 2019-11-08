@@ -82,21 +82,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        skillz = await skillzService.GetAllTeamsAsync();
+        skillz = await skillzService.GetAllSkillzAsync();
     }
 
     void ShowPopup()
     {
-        if (!showPopup)
-        {
-            showPopup = true;
-        }
-        else
-        {
-            showPopup = false;
-
-        }
+        showPopup = !showPopup;
     }
+
     void AddSkill()
     {
         if (AddSkillModel.ID == 0)

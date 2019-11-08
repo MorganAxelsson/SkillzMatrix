@@ -75,7 +75,7 @@ else
 }
 
 @code {
-    SkillzModel[] skillz;
+    List<SkillzModel> skillz;
     private SkillzModel AddSkillModel = new SkillzModel();
     bool showPopup = false;
     string skillzName { get; set; } = "";
@@ -99,9 +99,14 @@ else
     }
     void AddSkill()
     {
-        var skillToAdd = AddSkillModel;
-        skillzService.AddSkillAsync(AddSkillModel);
-        //TODO: add to list
+        if (AddSkillModel.ID == 0)
+        {
+            var skillToAdd = AddSkillModel;
+            skillzService.AddSkillAsync(AddSkillModel);
+            //TODO: get from created object to get the id to.
+            skillz.Add(AddSkillModel);
+        }
+
         showPopup = false;
     }
 }

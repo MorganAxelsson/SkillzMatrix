@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SkillzMatrix.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,28 @@ namespace SkillzMatrix.Services
 {
     public class SkillzService
     {
-        public async Task<SkillzModel[]> GetAllTeamsAsync()
+        private HttpClient _client;
+        private IConfiguration _config;
+        private string baseApiUrl;
+        public SkillzService(IConfiguration config)
         {
-            HttpClient client = new HttpClient();
-            var result = await client.GetStringAsync("https://localhost:44344/api/skillz/getall");
-            return JsonConvert.DeserializeObject<SkillzModel[]>(result);
+            _client = new HttpClient();
+            _config = config;
+            baseApiUrl = _config["BaseApiUrl"];
+        }
+        public async Task<List<SkillzModel>> GetAllTeamsAsync()
+        {            
+            var result = await _client.GetStringAsync(baseApiUrl + "api/skillz/getall");
+            return JsonConvert.DeserializeObject<List<SkillzModel>>(result);
         }
         public async void AddSkillAsync(SkillzModel skillzModel)
-        {
-            HttpClient client = new HttpClient();
+        {            
             StringContent content = new StringContent(JsonConvert.SerializeObject(skillzModel), Encoding.UTF8, "application/json");
-            var result = await client.PostAsync("https://localhost:44344/api/skillz/add", content);
-           // return JsonConvert.DeserializeObject<SkillzModel[]>(result);
+            var result = await _client.PostAsync(baseApiUrl + "api/skillz/add", content);           
         }
         public async void DeleteSkillAsync(int id)
         {
-            HttpClient client = new HttpClient();
-            //var result = await client.PostAsync("https://localhost:44344/api/skillz/getall");
+            //var result = await client.PostAsync(baseApiUrl + "api/skillz/getall");
             // return JsonConvert.DeserializeObject<SkillzModel[]>(result);
         }
     }

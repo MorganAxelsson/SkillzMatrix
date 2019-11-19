@@ -33,8 +33,7 @@ namespace SkillzMatrix.Services
         }
         public async void DeleteSkillAsync(int id)
         {
-            //var result = await client.PostAsync(baseApiUrl + "api/skillz/getall");
-            // return JsonConvert.DeserializeObject<SkillzModel[]>(result);
+          var result = await _client.DeleteAsync(baseApiUrl + "api/skillz/" + id);          
         }
     }
 }

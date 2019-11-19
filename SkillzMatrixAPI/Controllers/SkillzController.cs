@@ -44,5 +44,18 @@ namespace SkillzMatrixAPI.Controllers
                  _ISkillzRepository.Add(skillzEntity);                
             }          
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var skill = await _ISkillzRepository.Get(id);
+
+            if(skill == null)
+            {
+                return NotFound();
+            }
+                
+             _ISkillzRepository.Delete(skill);
+            return NoContent();
+        }
     }
 }

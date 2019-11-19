@@ -2,21 +2,13 @@
 @using SkillzMatrix.Shared.Models
 @using SkillzMatrix.Services
 @inject SkillzService skillzService
+@inject IJSRuntime js
 
 <h1>Skillz</h1>
 
 @if (skillz == null)
 {
-    <p><em>Loading...</em></p>
-    <div class="spinner-grow text-muted"></div>
-    <div class="spinner-grow text-primary"></div>
-    <div class="spinner-grow text-success"></div>
-    <div class="spinner-grow text-info"></div>
-    <div class="spinner-grow text-warning"></div>
-    <div class="spinner-grow text-danger"></div>
-    <div class="spinner-grow text-secondary"></div>
-    <div class="spinner-grow text-dark"></div>
-    <div class="spinner-grow text-light"></div>
+  <Spinner></Spinner>
 }
 else
 {
@@ -33,18 +25,18 @@ else
             <table class="table table-hover table-striped fixed-table-body">
                 <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var skill in skillz.Where(x => x.Name.ToLower().Contains(skillzName.ToLower())))
+                    @foreach (var skill in skillz.Where(x => x.Name.ToLower().Contains(skillzName.ToLower())).OrderByDescending(x => x.Name))
                     {
                         <tr>
-                            <td>@skill.ID</td>
                             <td>@skill.Name</td>
                             <td>@skill.Description</td>
+                            <td><button id="deleteSkill" type="button" @onclick="(()=> DeleteSkill(skill.ID))" class="btn btn-outline-dark">Delete</button></td>
                         </tr>
                     }
                 </tbody>
@@ -67,7 +59,7 @@ else
                     <InputText id="description" @bind-Value="@AddSkillModel.Description" />
                 </div>
                 <div class="col-md-12 mb-2">
-                    <button id="AddSkill" type="submit" class="btn btn-outline-dark">Add</button>
+                    <button id="AddSkillBtn" type="submit" class="btn btn-outline-dark">Add</button>
                 </div>
             </div>
         </EditForm>
@@ -90,16 +82,27 @@ else
         showPopup = !showPopup;
     }
 
-    void AddSkill()
+    async Task AddSkill()
     {
         if (AddSkillModel.ID == 0)
         {
             var skillToAdd = AddSkillModel;
             skillzService.AddSkillAsync(AddSkillModel);
-            //TODO: get from created object to get the id to.
-            skillz.Add(AddSkillModel);
+            //TODO: add only created object?
+            skillz = await skillzService.GetAllSkillzAsync();
         }
 
         showPopup = false;
+        AddSkillModel = new SkillzModel();
+    }
+    async Task DeleteSkill(int id)
+    {
+        var skill = skillz.FirstOrDefault(x=>x.ID == id);
+        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {skill.Name}?"))
+        {
+            skillzService.DeleteSkillAsync(id);
+            skillz = await skillzService.GetAllSkillzAsync();
+        }
+
     }
 }

@@ -10,30 +10,37 @@ using System.Threading.Tasks;
 
 namespace SkillzMatrix.Services
 {
-    public class SkillzService
+    public class SkillzService : ISkillzService
     {
-        private HttpClient _client;
-        private IConfiguration _config;
-        private string baseApiUrl;
-        public SkillzService(IConfiguration config)
+        private readonly HttpClient _client;
+        private IConfiguration _config;        
+        public SkillzService(IConfiguration config, HttpClient client)
         {
-            _client = new HttpClient();
-            _config = config;
-            baseApiUrl = _config["BaseApiUrl"];
+            _client = client;
+            _config = config;            
         }
         public async Task<List<SkillzModel>> GetAllSkillzAsync()
-        {            
-            var result = await _client.GetStringAsync(baseApiUrl + "api/skillz/getall");
+        {
+            var result = await _client.GetStringAsync($"api/skillz/getall");
             return JsonConvert.DeserializeObject<List<SkillzModel>>(result);
         }
-        public async void AddSkillAsync(SkillzModel skillzModel)
-        {            
+        public async Task<SkillzModel> AddSkillAsync(SkillzModel skillzModel)
+        {
             StringContent content = new StringContent(JsonConvert.SerializeObject(skillzModel), Encoding.UTF8, "application/json");
-            var result = await _client.PostAsync(baseApiUrl + "api/skillz/add", content);           
+            var result = await _client.PostAsync($"api/skillz/add", content);
+
+            if (result.IsSuccessStatusCode)
+            {
+                return await System.Text.Json.JsonSerializer.DeserializeAsync<SkillzModel>(await result.Content.ReadAsStreamAsync());
+            }
+
+            return null;
         }
         public async void DeleteSkillAsync(int id)
         {
-          var result = await _client.DeleteAsync(baseApiUrl + "api/skillz/" + id);          
+            var result = await _client.DeleteAsync($"api/skillz/" + id);
+
+           
         }
     }
 }

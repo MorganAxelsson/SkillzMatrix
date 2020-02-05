@@ -28,10 +28,23 @@ namespace SkillzMatrix
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();            
-            services.AddScoped<TeamService>();
-            services.AddScoped<SkillzService>();
-            services.AddScoped<UserService>();
+            services.AddServerSideBlazor();
+
+            string apiUrl = Configuration["BaseApiUrl"];
+                       
+            Uri apiBaseUrl = new Uri(apiUrl);
+
+            void RegisterTypedClient<TClient,TImplemantation>(Uri apiBaseUrl)
+                where TClient : class where TImplemantation : class, TClient
+            {
+                services.AddHttpClient<TClient, TImplemantation>(client => { client.BaseAddress = apiBaseUrl; });
+            }
+
+            //services
+            RegisterTypedClient<ITeamService,TeamService>(apiBaseUrl);
+            RegisterTypedClient<ISkillzService, SkillzService>(apiBaseUrl);
+            RegisterTypedClient<IUserService, UserService>(apiBaseUrl);
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

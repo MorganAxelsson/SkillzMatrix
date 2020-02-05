@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SkillzMatrix.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,20 @@ using System.Threading.Tasks;
 
 namespace SkillzMatrix.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
+        private readonly HttpClient _client;
+        private IConfiguration _config;
+ 
+        public UserService(IConfiguration config, HttpClient client)
+        {
+            _client = client;
+            _config = config;
+           
+        }
         public async Task<UserModel[]> GetAllUsersAsync()
         {
-            HttpClient client = new HttpClient();
-            var result = await client.GetStringAsync("https://localhost:44344/api/users/getall");
+            var result = await _client.GetStringAsync($"api/users/getall");
             return JsonConvert.DeserializeObject<UserModel[]>(result);
         }
     }

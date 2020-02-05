@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace SkillzMatrix.Services
 {
-    public class TeamService
+    public class TeamService : ITeamService
     {
-        private HttpClient _client;
-        private IConfiguration _config;
-        private string baseApiUrl;
-        public TeamService(IConfiguration config)
+        private readonly HttpClient _client;
+        private IConfiguration _config;      
+        public TeamService(IConfiguration config, HttpClient client)
         {
-            _client = new HttpClient();
-            _config = config;
-            baseApiUrl = _config["BaseApiUrl"];
+            _client = client;
+            _config = config;      
         }
         public async Task<TeamModel[]> GetAllTeamsAsync()
-        {                   
-            var result = await _client.GetStringAsync(baseApiUrl + "api/teams/getall");
+        {
+            var result = await _client.GetStringAsync($"api/teams/getall");
             return JsonConvert.DeserializeObject<TeamModel[]>(result);
         }
     }

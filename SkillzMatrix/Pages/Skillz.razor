@@ -1,7 +1,7 @@
 ﻿@page "/skillz"
 @using SkillzMatrix.Shared.Models
 @using SkillzMatrix.Services
-@inject SkillzService skillzService
+@inject ISkillzService skillzService
 @inject IJSRuntime js
 
 <h1>Skillz</h1>
@@ -87,9 +87,10 @@ else
         if (AddSkillModel.ID == 0)
         {
             var skillToAdd = AddSkillModel;
-            skillzService.AddSkillAsync(AddSkillModel);
+            await skillzService.AddSkillAsync(AddSkillModel);
             //TODO: add only created object?
             skillz = await skillzService.GetAllSkillzAsync();
+            StateHasChanged();
         }
 
         showPopup = false;
@@ -102,6 +103,7 @@ else
         {
             skillzService.DeleteSkillAsync(id);
             skillz = await skillzService.GetAllSkillzAsync();
+            StateHasChanged();
         }
 
     }

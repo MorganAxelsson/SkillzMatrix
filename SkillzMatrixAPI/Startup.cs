@@ -36,8 +36,7 @@ namespace SkillzMatrixAPI
            
             services.AddControllers();
 
-            //Repositories
-           
+            //Repositories           
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ITeamsRepository, TeamsRepository>();
             services.AddScoped<ISkillzRepository, SkillzRepository>();
